@@ -1,0 +1,9 @@
+# Core (always needed)
+psutil>=5.9.0
+pyyaml>=6.0
+
+# AI backends: install only the one(s) you use.
+# Ollama needs no Python package (uses built-in urllib).
+anthropic>=0.40.0
+openai>=1.40.0
+google-genai>=1.0.0

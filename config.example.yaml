@@ -1,0 +1,42 @@
+# Axon configuration. Copy to config.yaml and edit.
+# Every value is optional; the defaults shown are used if omitted.
+
+# How often `axon run` repeats a cycle, in seconds. Ignored by `axon once`.
+interval_seconds: 60
+
+# When true, low-risk actions run automatically. Medium and high risk
+# always wait for human approval regardless of this setting.
+auto_apply_low: true
+
+# Which AI brain to use. The prefix selects the backend:
+#
+#   ollama/llama3.2:1b     local, free, no key, light enough for laptops
+#   ollama/llama3          local, free, but needs ~8GB free RAM
+#   claude-opus-4-5        Anthropic, needs ANTHROPIC_API_KEY
+#   gpt-4o-mini            OpenAI, needs OPENAI_API_KEY
+#   gemini-2.0-flash       Google, needs GOOGLE_API_KEY
+#
+# You can also be explicit with a slash: openai/gpt-4o, gemini/gemini-2.0-flash,
+# claude/claude-opus-4-5. Bare names starting with gpt, gemini, or claude are
+# routed automatically; anything else is treated as an Ollama model tag.
+model: ollama/llama3.2:1b
+
+# systemd services to pull recent logs from (Linux only; ignored elsewhere).
+watched_units:
+  - nginx
+  - postgresql
+
+# Threshold rules for the analyse stage. The AI is only called when one of
+# these is crossed, so tuning these controls how often (and how expensively)
+# the brain runs.
+thresholds:
+  cpu_warn: 80.0
+  cpu_crit: 95.0
+  mem_warn: 80.0
+  mem_crit: 95.0
+  disk_warn: 85.0
+  disk_crit: 95.0
+
+# Where the approval queue and audit log are written.
+queue_path: ./data/approval_queue.json
+audit_path: ./data/audit.log
